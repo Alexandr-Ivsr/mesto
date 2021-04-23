@@ -1,0 +1,11 @@
+.header__logo {
+  display: block;
+  width: 104px;
+  color: inherit;
+}
+
+@media (min-width: 768px) {
+  .header__logo {
+    width: auto;
+  }
+}
