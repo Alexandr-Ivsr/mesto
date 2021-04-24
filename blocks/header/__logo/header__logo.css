@@ -1,11 +1,20 @@
 .header__logo {
   display: block;
   width: 104px;
+  height: 24px;
   color: inherit;
+  background-image: url("../../../image/logo-header.svg");
+  background-size: 100%;
+  transition: .2s all ease-in-out;
+}
+
+.header__logo:hover {
+  background-image: url("../../../image/logo-header-hover.svg");
 }
 
 @media (min-width: 768px) {
   .header__logo {
-    width: auto;
+    width: 142px;
+    height: 33px;
   }
 }

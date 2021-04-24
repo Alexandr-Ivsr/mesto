@@ -1,15 +1,13 @@
-.profile__info {
-  margin: 0 auto 36px;
+.footer__copyright {
+  margin: 0;
   font-size: 14px;
   line-height: 17px;
-  text-align: center;
+  color: #545454;
 }
 
 @media (min-width: 1024px) {
-  .profile__info {
-    margin: 0;
+  .footer__copyright {
     font-size: 18px;
     line-height: 22px;
-    text-align: left;
   }
 }

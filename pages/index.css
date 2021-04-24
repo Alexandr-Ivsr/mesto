@@ -3,7 +3,6 @@
 @import url(../blocks/page/page.css);
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-@import url(../blocks/header/__logo-image/header__logo-image.css);
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__wrapper/profile__wrapper.css);
 @import url(../blocks/profile/__name/profile__name.css);
@@ -13,13 +12,13 @@
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
 @import url(../blocks/profile/__edit-button-logo/profile__edit-button-logo.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
-@import url(../blocks/profile/__add-button/__add-button-logo/profile__add-button-logo.css);
+@import url(../blocks/profile/__add-button-logo/profile__add-button-logo.css);
 @import url(../blocks/places/places.css);
 @import url(../blocks/places/__item/places__item.css);
 @import url(../blocks/places/__image/places__image.css);
 @import url(../blocks/places/__wrapper/places__wrapper.css);
 @import url(../blocks/places/__name/places__name.css);
 @import url(../blocks/places/__like-button/places__like-button.css);
-@import url(../blocks/places/__like-icon/places__like-icon.css);
-
-
+@import url(../blocks/places/__like-button/_active/places__like-button_active.css);
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);

@@ -10,6 +10,11 @@
   margin: 0 auto;
   border: 2px solid #FFFFFF;
   box-sizing: border-box;
+  transition: .2s opacity ease-in-out;
+}
+
+.profile__add-button:hover {
+  opacity: .6;
 }
 
 @media (min-width: 1024px) {
