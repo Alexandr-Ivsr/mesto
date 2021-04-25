@@ -13,9 +13,7 @@
   </header>
   <main>
     <section class="profile">
-      <div class="profile__avatar">
-        <img class="profile__avatar-image" src="./image/avatar.jpg" alt="Аватар профиля">
-      </div>
+      <img class="profile__avatar" src="./image/avatar.jpg" alt="Аватар профиля">
       <div class="profile__container">
         <div class="profile__wrapper">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -33,42 +31,42 @@
     <section class="places">
       <div class="places__item">
         <img class="places__image" src="./image/karachaevsk.jpg" alt="Карачаевск">
-        <div class="places__wrapper">
+        <div class="places__footer">
           <h2 class="places__name">Карачаево-Черкесия</h2>
           <button class="places__like-button"></button>
         </div>
       </div>
       <div class="places__item">
         <img class="places__image" src="./image/mountain-elbrus.jpg" alt="Эльбрус">
-        <div class="places__wrapper">
+        <div class="places__footer">
           <h2 class="places__name">Гора Эльбрус</h2>
           <button class="places__like-button"></button>
         </div>
       </div>
       <div class="places__item">
         <img class="places__image" src="./image/dombay.jpg" alt="Домбай">
-        <div class="places__wrapper">
+        <div class="places__footer">
           <h2 class="places__name">Домбай</h2>
           <button class="places__like-button"></button>
         </div>
       </div>
       <div class="places__item">
         <img class="places__image" src="./image/karachaevsk.jpg" alt="Карачаевск">
-        <div class="places__wrapper">
+        <div class="places__footer">
           <h2 class="places__name">Карачаево-Черкесия</h2>
           <button class="places__like-button"></button>
         </div>
       </div>
       <div class="places__item">
         <img class="places__image" src="./image/mountain-elbrus.jpg" alt="Эльбрус">
-        <div class="places__wrapper">
+        <div class="places__footer">
           <h2 class="places__name">Гора Эльбрус</h2>
           <button class="places__like-button"></button>
         </div>
       </div>
       <div class="places__item">
         <img class="places__image" src="./image/dombay.jpg" alt="Домбай">
-        <div class="places__wrapper">
+        <div class="places__footer">
           <h2 class="places__name">Домбай</h2>
           <button class="places__like-button"></button>
         </div>
@@ -76,23 +74,23 @@
     </section>
   </main>
 
-  <section class="popup">
+  <footer class="footer">
+    <p class="footer__copyright">© 2020 Mesto Russia</p>
+  </footer>
+
+  <article class="popup">
     <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form">
-        <input class="popup__input" type="text" name="name" placeholder="Имя" value="Жак-Ив Кусто">
-        <input class="popup__input" type="text" name="job" placeholder="Род деятельности" value="Исследователь океана">
+      <form class="popup__form" name="popupForm">
+        <input class="popup__input" type="text" name="name" placeholder="Имя">
+        <input class="popup__input" type="text" name="job" placeholder="Род деятельности">
         <button class="popup__btn-save" type="submit">Сохранить</button>
       </form>
       <button class="popup__btn-close">
         <img class="popup__btn-close-icon" src="./image/icon-close.svg" alt="Закрыть">
       </button>
     </div>
-  </section>
-
-  <footer class="footer">
-    <p class="footer__copyright">© 2020 Mesto Russia</p>
-  </footer>
+  </article>
 
   <script src="scripts/scripts.js"></script>
 </body>

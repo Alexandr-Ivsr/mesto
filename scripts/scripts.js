@@ -7,7 +7,7 @@ let jobInput = popupForm.querySelector('.popup__input[name=job]');
 let profileName = document.querySelector('.profile__name');
 let profileInfo = document.querySelector('.profile__info');
 
-function showPopup() {
+function openPopup() {
   popup.classList.add('popup_opened');
   getProfileValues();
 }
@@ -29,16 +29,11 @@ function formSubmitHandler(evt) {
   closePopup();
 }
 
-editButton.addEventListener('click', showPopup);
+editButton.addEventListener('click', openPopup);
 closeButton.addEventListener('click', closePopup);
 popupForm.addEventListener('submit', formSubmitHandler);
 document.addEventListener('keydown', function(evt) {
   if (evt.code === 'Escape') {
     closePopup();
-  }
-})
-popup.addEventListener('keydown', function(evt) {
-  if (evt.code === 'Enter') {
-    formSubmitHandler(evt);
   }
 })

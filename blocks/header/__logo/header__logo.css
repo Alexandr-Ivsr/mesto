@@ -5,11 +5,11 @@
   color: inherit;
   background-image: url("../../../image/logo-header.svg");
   background-size: 100%;
-  transition: .2s all ease-in-out;
+  transition: .2s opacity ease-in-out;
 }
 
 .header__logo:hover {
-  background-image: url("../../../image/logo-header-hover.svg");
+  opacity: .2;
 }
 
 @media (min-width: 768px) {
