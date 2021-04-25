@@ -1,0 +1,5 @@
+@media (min-width: 1024px) {
+  .profile__container {
+    max-width: 360px;
+  }
+}
