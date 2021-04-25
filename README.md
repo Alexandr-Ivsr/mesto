@@ -13,4 +13,4 @@
 
 **GitHub Pages**
 
-* [Ссылка на GitHub Pages](https://alexandr-ivsr.github.io/russian-travel/)
+* [Ссылка на GitHub Pages](https://alexandr-ivsr.github.io/mesto/)
