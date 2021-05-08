@@ -1,18 +1,17 @@
-let editButton = document.querySelector('.profile__edit-button');
-let closeButton = document.querySelector('.popup__btn-close');
-let popup = document.querySelector('.popup');
-let popupForm = document.querySelector('.popup__form');
-let nameInput = popupForm.querySelector('.popup__input[name=name]');
-let jobInput = popupForm.querySelector('.popup__input[name=job]');
-let profileName = document.querySelector('.profile__name');
-let profileInfo = document.querySelector('.profile__info');
+const editButton = document.querySelector('.profile__edit-button');
+const popupProfile = document.querySelector('.popup_profile');
+const profileCloseButton = popupProfile.querySelector('.popup__btn-close');
+const popupProfileForm = popupProfile.querySelector('.popup__form');
+const nameInput = popupProfileForm.querySelector('.popup__input[name=name]');
+const jobInput = popupProfileForm.querySelector('.popup__input[name=job]');
+const profileName = document.querySelector('.profile__name');
+const profileInfo = document.querySelector('.profile__info');
 
-function openPopup() {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
-  getProfileValues();
 }
 
-function closePopup() {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
@@ -29,11 +28,33 @@ function formSubmitHandler(evt) {
   closePopup();
 }
 
-editButton.addEventListener('click', openPopup);
-closeButton.addEventListener('click', closePopup);
-popupForm.addEventListener('submit', formSubmitHandler);
+editButton.addEventListener('click', () => {
+  openPopup(popupProfile);
+  getProfileValues();
+});
+
+profileCloseButton.addEventListener('click', () => {
+  closePopup(popupProfile);
+});
+
+popupProfileForm.addEventListener('submit', formSubmitHandler);
+
 document.addEventListener('keydown', function(evt) {
   if (evt.code === 'Escape') {
-    closePopup();
+    closePopup(popupProfile);
+    closePopup(popupPlace);
   }
 })
+
+const profileAddButton = document.querySelector('.profile__add-button');
+const popupPlace = document.querySelector('.popup_place')
+const popupPlaceBtnClose = popupPlace.querySelector('.popup__btn-close');
+
+profileAddButton.addEventListener('click', () => {
+  openPopup(popupPlace)
+});
+
+popupPlaceBtnClose.addEventListener('click', () => {
+  closePopup(popupPlace);
+});
+

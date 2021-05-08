@@ -78,10 +78,10 @@
     <p class="footer__copyright">© 2020 Mesto Russia</p>
   </footer>
 
-  <article class="popup">
+  <article class="popup popup_profile">
     <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="popupForm">
+      <form class="popup__form" name="popupFormEdit">
         <input class="popup__input" type="text" name="name" placeholder="Имя">
         <input class="popup__input" type="text" name="job" placeholder="Род деятельности">
         <button class="popup__btn-save" type="submit">Сохранить</button>
@@ -89,6 +89,30 @@
       <button class="popup__btn-close">
         <img class="popup__btn-close-icon" src="./image/icon-close.svg" alt="Закрыть">
       </button>
+    </div>
+  </article>
+
+  <article class="popup popup_place">
+    <div class="popup__container">
+      <h3 class="popup__title">Новое место</h3>
+      <form class="popup__form" name="popupFormPlace">
+        <input class="popup__input" type="text" name="placeName" placeholder="Название">
+        <input class="popup__input" type="text" name="placeLink" placeholder="Ссылка на картинку">
+        <button class="popup__btn-save" type="submit">Создать</button>
+      </form>
+      <button class="popup__btn-close">
+        <img class="popup__btn-close-icon" src="./image/icon-close.svg" alt="Закрыть">
+      </button>
+    </div>
+  </article>
+
+  <article class="popup popup_image">
+    <div class="popup__image-container">
+      <button class="popup__btn-close">
+        <img class="popup__btn-close-icon" src="./image/icon-close.svg" alt="Закрыть">
+      </button>
+      <img class="popup__place-img" src="./image/karachaevsk-popup.jpg" alt="Карачаевск">
+      <p class="popup__place-name">Карачаево-Черкессия</p>
     </div>
   </article>
 
