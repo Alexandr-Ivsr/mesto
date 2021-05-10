@@ -93,8 +93,11 @@ const initialCards = [
 const placesWrapper = document.querySelector('.places');
 const templatePlace = document.querySelector('#template-place');
 const popupImage = document.querySelector('.popup_type_image');
+const popupPlaceImage = popupImage.querySelector('.popup__place-img');
+const popupPlaceName = popupImage.querySelector('.popup__place-name');
+const popupImageBtnClose = popupImage.querySelector('.popup__btn-close');
 
-function createCard(name, link) {
+function getCard(name, link) {
   const newPlace = templatePlace.content.querySelector('.places__item').cloneNode(true);
   const newPlaceImage = newPlace.querySelector('.places__image');
   const newPlaceRemoveBtn = newPlace.querySelector('.places__remove-button');
@@ -107,11 +110,16 @@ function createCard(name, link) {
   newPlaceLikeBtn.addEventListener('click', handleLikeButton);
 
   newPlaceImage.addEventListener('click', () => {
-    handleOpenImagePopup(newPlaceImage);
+    handleOpenImagePopup(name, link);
   });
 
   newPlaceRemoveBtn.addEventListener('click', handleRemovePlace);
 
+  return newPlace;
+}
+
+function createCard(name, link) {
+  const newPlace = getCard(name, link);
   placesWrapper.prepend(newPlace);
 }
 
@@ -119,19 +127,15 @@ initialCards.forEach(function(item) {
   createCard(item.name, item.link);
 })
 
-const popupPlaceImage = popupImage.querySelector('.popup__place-img');
-const popupPlaceName = popupImage.querySelector('.popup__place-name');
-const popupImageBtnClose = popupImage.querySelector('.popup__btn-close');
-
-function getPlaceValues(img) {
-  popupPlaceImage.setAttribute('src', img.getAttribute('src'));
-  popupPlaceImage.setAttribute('alt', img.getAttribute('alt'));
-  popupPlaceName.textContent = img.closest('.places__item').querySelector('.places__name').textContent;
+function handleOpenImagePopup(name, link) {
+  openPopup(popupImage);
+  getPlaceValues(name, link);
 }
 
-function handleOpenImagePopup(img) {
-  openPopup(popupImage);
-  getPlaceValues(img);
+function getPlaceValues(name, link) {
+  popupPlaceImage.setAttribute('src', link);
+  popupPlaceImage.setAttribute('alt', name);
+  popupPlaceName.textContent = name;
 }
 
 function handleLikeButton(evt) {
