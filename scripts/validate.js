@@ -8,7 +8,6 @@ function enableValidation(config) {
 
 function handleFormSubmit(evt) {
   evt.preventDefault();
-  const form = evt.currentTarget;
 }
 
 function handleFormInput(evt, config) {
@@ -39,8 +38,16 @@ function setCustomError(input, config) {
     input.setCustomValidity(`Строка имеет неверную длину. Введено ${currentLength}, а должно быть от ${min} до ${max}`);
   }
 
+  if (validity.valueMissing) {
+    input.setCustomValidity("Вы пропустили это поле.");
+  }
+
   if (validity.typeMismatch) {
-    input.setCustomValidity("Не ссылка");
+    console.log(validity.valid)
+    input.setCustomValidity("Введите адрес сайта.");
+  } else {
+    console.log(validity.valid)
+
   }
 }
 
