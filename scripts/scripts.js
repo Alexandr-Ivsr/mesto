@@ -9,10 +9,29 @@ const profileInfo = document.querySelector('.profile__info');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  closePopupOverlay(popup);
+  document.addEventListener('keydown', closePopupEsc);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEsc);
+}
+
+
+function closePopupOverlay(popup) {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(popup);
+    }
+  })
+}
+
+function closePopupEsc(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(popupProfile);
+    closePopup(popupPlace);
+  }
 }
 
 function getProfileValues() {

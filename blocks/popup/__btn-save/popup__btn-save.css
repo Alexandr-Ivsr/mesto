@@ -1,5 +1,6 @@
 .popup__btn-save {
   width: 100%;
+  margin-top: 45px;
   background-color: #000000;
   border-radius: 2px;
   border: none;
@@ -12,7 +13,7 @@
   transition: .2s background-color ease-in-out;
 }
 
-.popup__btn-save:hover {
+.popup__btn-save:not([disabled]):hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 

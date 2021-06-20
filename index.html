@@ -38,9 +38,11 @@
   <article class="popup popup_type_profile">
     <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="popupFormEdit">
-        <input required class="popup__input" type="text" name="name" placeholder="Имя">
-        <input required class="popup__input" type="text" name="job" placeholder="Род деятельности">
+      <form class="popup__form" name="popupFormEdit" novalidate>
+        <input required class="popup__input" id="profile-name" minlength="2" maxlength="40" type="text" name="name" placeholder="Имя" required>
+        <span class="popup__error" id="profile-name-error"></span>
+        <input required class="popup__input" id="profile-job" minlength="2" maxlength="200" type="text" name="job" placeholder="Род деятельности" required>
+        <span class="popup__error" id="profile-job-error"></span>
         <button class="popup__btn-save" type="submit">Сохранить</button>
       </form>
       <button class="popup__btn-close">
@@ -52,9 +54,11 @@
   <article class="popup popup_type_place">
     <div class="popup__container">
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="popupFormPlace">
-        <input required class="popup__input" type="text" name="placeName" placeholder="Название">
-        <input required class="popup__input" type="text" name="placeLink" placeholder="Ссылка на картинку">
+      <form class="popup__form" name="popupFormPlace" novalidate>
+        <input required class="popup__input" type="text" id="place-name" minlength="2" maxlength="30" name="placeName" placeholder="Название">
+        <span class="popup__error" id="place-name-error"></span>
+        <input required class="popup__input" type="url" name="placeLink" id="place-link" placeholder="Ссылка на картинку">
+        <span class="popup__error" id="place-link-error"></span>
         <button class="popup__btn-save" type="submit">Создать</button>
       </form>
       <button class="popup__btn-close">
@@ -87,5 +91,6 @@
   </template>
 
   <script src="scripts/scripts.js"></script>
+  <script src="scripts/validate.js"></script>
 </body>
 </html>
