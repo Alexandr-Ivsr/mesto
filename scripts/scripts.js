@@ -139,6 +139,7 @@ popupImageBtnClose.addEventListener('click', () => {
 
 closePopupOverlay(popupProfile);
 closePopupOverlay(popupPlace);
+closePopupOverlay(popupImage);
 
 initialCards.forEach(function(item) {
   createCard(item.name, item.link);
