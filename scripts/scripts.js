@@ -6,10 +6,22 @@ const nameInput = popupProfileForm.querySelector('.popup__input[name=name]');
 const jobInput = popupProfileForm.querySelector('.popup__input[name=job]');
 const profileName = document.querySelector('.profile__name');
 const profileInfo = document.querySelector('.profile__info');
+const profileAddButton = document.querySelector('.profile__add-button');
+const popupPlace = document.querySelector('.popup_type_place')
+const popupPlaceBtnClose = popupPlace.querySelector('.popup__btn-close');
+const popupPlaceForm = popupPlace.querySelector('.popup__form');
+const popupPlaceBtnSave = popupPlace.querySelector('.popup__btn-save');
+const placeNameInput = popupPlaceForm.querySelector('.popup__input[name=placeName]');
+const placeLink = popupPlaceForm.querySelector('.popup__input[name=placeLink]');
+const placesWrapper = document.querySelector('.places');
+const templatePlace = document.querySelector('#template-place');
+const popupImage = document.querySelector('.popup_type_image');
+const popupPlaceImage = popupImage.querySelector('.popup__place-img');
+const popupPlaceName = popupImage.querySelector('.popup__place-name');
+const popupImageBtnClose = popupImage.querySelector('.popup__btn-close');
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  closePopupOverlay(popup);
   document.addEventListener('keydown', closePopupEsc);
 }
 
@@ -18,19 +30,18 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupEsc);
 }
 
-
 function closePopupOverlay(popup) {
-  popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup')) {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
       closePopup(popup);
     }
   })
 }
 
 function closePopupEsc(evt) {
+  const openedPopup = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
-    closePopup(popupProfile);
-    closePopup(popupPlace);
+    closePopup(openedPopup);
   }
 }
 
@@ -39,7 +50,7 @@ function getProfileValues() {
   jobInput.value = profileInfo.textContent;
 }
 
-function profileFormSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileInfo.textContent = jobInput.value;
@@ -47,74 +58,14 @@ function profileFormSubmitHandler(evt) {
   closePopup(popupProfile);
 }
 
-editButton.addEventListener('click', () => {
-  openPopup(popupProfile);
-  getProfileValues();
-});
-
-profileCloseButton.addEventListener('click', () => {
-  closePopup(popupProfile);
-});
-
-popupProfileForm.addEventListener('submit', profileFormSubmitHandler);
-
-const profileAddButton = document.querySelector('.profile__add-button');
-const popupPlace = document.querySelector('.popup_type_place')
-const popupPlaceBtnClose = popupPlace.querySelector('.popup__btn-close');
-const popupPlaceForm = popupPlace.querySelector('.popup__form');
-const placeNameInput = popupPlaceForm.querySelector('.popup__input[name=placeName]');
-const placeLink = popupPlaceForm.querySelector('.popup__input[name=placeLink]');
-
-profileAddButton.addEventListener('click', () => {
-  openPopup(popupPlace)
-});
-
-popupPlaceBtnClose.addEventListener('click', () => {
-  closePopup(popupPlace);
-});
-
-function placeFormSubmitHandler(evt) {
+function handlePlaceFormSubmit(evt) {
   evt.preventDefault();
   createCard(placeNameInput.value, placeLink.value);
   evt.target.reset();
+  popupPlaceBtnSave.setAttribute('disabled', 'disabled');
+  popupPlaceBtnSave.classList.add('popup__btn-save_disabled');
   closePopup(popupPlace);
 }
-
-popupPlaceForm.addEventListener('submit', placeFormSubmitHandler);
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-const placesWrapper = document.querySelector('.places');
-const templatePlace = document.querySelector('#template-place');
-const popupImage = document.querySelector('.popup_type_image');
-const popupPlaceImage = popupImage.querySelector('.popup__place-img');
-const popupPlaceName = popupImage.querySelector('.popup__place-name');
-const popupImageBtnClose = popupImage.querySelector('.popup__btn-close');
 
 function getCard(name, link) {
   const newPlace = templatePlace.content.querySelector('.places__item').cloneNode(true);
@@ -142,10 +93,6 @@ function createCard(name, link) {
   placesWrapper.prepend(newPlace);
 }
 
-initialCards.forEach(function(item) {
-  createCard(item.name, item.link);
-})
-
 function handleOpenImagePopup(name, link) {
   openPopup(popupImage);
   getPlaceValues(name, link);
@@ -165,6 +112,34 @@ function handleRemovePlace(evt) {
   evt.target.closest('.places__item').remove();
 }
 
+editButton.addEventListener('click', () => {
+  openPopup(popupProfile);
+  getProfileValues();
+});
+
+profileCloseButton.addEventListener('click', () => {
+  closePopup(popupProfile);
+});
+
+popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
+
+profileAddButton.addEventListener('click', () => {
+  openPopup(popupPlace)
+});
+
+popupPlaceBtnClose.addEventListener('click', () => {
+  closePopup(popupPlace);
+});
+
+popupPlaceForm.addEventListener('submit', handlePlaceFormSubmit);
+
 popupImageBtnClose.addEventListener('click', () => {
   closePopup(popupImage);
 });
+
+closePopupOverlay(popupProfile);
+closePopupOverlay(popupPlace);
+
+initialCards.forEach(function(item) {
+  createCard(item.name, item.link);
+})

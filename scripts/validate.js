@@ -1,9 +1,11 @@
 function enableValidation(config) {
-  const form = document.querySelector(config.formSelector);
-  form.addEventListener('submit', handleFormSubmit);
-  form.addEventListener('input', (evt) => {
-    handleFormInput(evt, config);
-  });
+  const forms = document.querySelectorAll(config.formSelector);
+  forms.forEach((form) => {
+    form.addEventListener('submit', handleFormSubmit);
+    form.addEventListener('input', (evt) => {
+      handleFormInput(evt, config);
+    });
+  })
 }
 
 function handleFormSubmit(evt) {
@@ -15,18 +17,12 @@ function handleFormInput(evt, config) {
   const form = evt.currentTarget;
 
   setCustomError(input, config);
-  setFieldError(input);
+  setFieldError(input, form);
   setSubmitButtonState(form, config);
 }
 
 function setCustomError(input, config) {
   const validity = input.validity;
-
-  if (!validity.valid) {
-    input.classList.add(config.inputErrorClass);
-  } else {
-    input.classList.remove(config.inputErrorClass);
-  }
 
   input.setCustomValidity("");
 
@@ -43,16 +39,18 @@ function setCustomError(input, config) {
   }
 
   if (validity.typeMismatch) {
-    console.log(validity.valid)
     input.setCustomValidity("Введите адрес сайта.");
-  } else {
-    console.log(validity.valid)
+  }
 
+  if (!validity.valid) {
+    input.classList.add(config.inputErrorClass);
+  } else {
+    input.classList.remove(config.inputErrorClass);
   }
 }
 
-function setFieldError(input) {
-  const span = document.querySelector(`#${input.id}-error`);
+function setFieldError(input, form) {
+  const span = form.querySelector(`#${input.id}-error`);
   span.textContent = input.validationMessage;
 }
 
@@ -70,17 +68,9 @@ function setSubmitButtonState(form, config) {
 }
 
 enableValidation({
-  formSelector: '.popup__form[name="popupFormEdit"]',
+  formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__btn-save',
-  inactiveButtonClass: 'popup__btn-save_invalid',
-  inputErrorClass: 'popup__input_type_error',
-});
-
-enableValidation({
-  formSelector: '.popup__form[name="popupFormPlace"]',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__btn-save',
-  inactiveButtonClass: 'popup__btn-save_invalid',
+  inactiveButtonClass: 'popup__btn-save_disabled',
   inputErrorClass: 'popup__input_type_error',
 });
