@@ -1,3 +1,9 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import { initialCards } from './constants.js';
+
+const placesWrapper = document.querySelector('.places');
+const forms = document.querySelectorAll('.popup__form');
 const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_profile');
 const profileCloseButton = popupProfile.querySelector('.popup__btn-close');
@@ -13,19 +19,14 @@ const popupPlaceForm = popupPlace.querySelector('.popup__form');
 const popupPlaceBtnSave = popupPlace.querySelector('.popup__btn-save');
 const placeNameInput = popupPlaceForm.querySelector('.popup__input[name=placeName]');
 const placeLink = popupPlaceForm.querySelector('.popup__input[name=placeLink]');
-const placesWrapper = document.querySelector('.places');
-const templatePlace = document.querySelector('#template-place');
 const popupImage = document.querySelector('.popup_type_image');
-const popupPlaceImage = popupImage.querySelector('.popup__place-img');
-const popupPlaceName = popupImage.querySelector('.popup__place-name');
-const popupImageBtnClose = popupImage.querySelector('.popup__btn-close');
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEsc);
 }
 
-function closePopup(popup) {
+export function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupEsc);
 }
@@ -60,56 +61,15 @@ function handleProfileFormSubmit(evt) {
 
 function handlePlaceFormSubmit(evt) {
   evt.preventDefault();
-  createCard(placeNameInput.value, placeLink.value);
+  const newCard = new Card({
+    name: placeNameInput.value,
+    link: placeLink.value
+  }, '#template-place').createCard();
+  placesWrapper.prepend(newCard);
   evt.target.reset();
   popupPlaceBtnSave.setAttribute('disabled', 'disabled');
   popupPlaceBtnSave.classList.add('popup__btn-save_disabled');
   closePopup(popupPlace);
-}
-
-function getCard(name, link) {
-  const newPlace = templatePlace.content.querySelector('.places__item').cloneNode(true);
-  const newPlaceImage = newPlace.querySelector('.places__image');
-  const newPlaceRemoveBtn = newPlace.querySelector('.places__remove-button');
-  const newPlaceLikeBtn = newPlace.querySelector('.places__like-button');
-
-  newPlace.querySelector('.places__name').textContent = name;
-  newPlaceImage.setAttribute('src', link);
-  newPlaceImage.setAttribute('alt', name);
-
-  newPlaceLikeBtn.addEventListener('click', handleLikeButton);
-
-  newPlaceImage.addEventListener('click', () => {
-    handleOpenImagePopup(name, link);
-  });
-
-  newPlaceRemoveBtn.addEventListener('click', handleRemovePlace);
-
-  return newPlace;
-}
-
-function createCard(name, link) {
-  const newPlace = getCard(name, link);
-  placesWrapper.prepend(newPlace);
-}
-
-function handleOpenImagePopup(name, link) {
-  openPopup(popupImage);
-  getPlaceValues(name, link);
-}
-
-function getPlaceValues(name, link) {
-  popupPlaceImage.setAttribute('src', link);
-  popupPlaceImage.setAttribute('alt', name);
-  popupPlaceName.textContent = name;
-}
-
-function handleLikeButton(evt) {
-  evt.target.classList.toggle('places__like-button_active');
-}
-
-function handleRemovePlace(evt) {
-  evt.target.closest('.places__item').remove();
 }
 
 editButton.addEventListener('click', () => {
@@ -133,14 +93,22 @@ popupPlaceBtnClose.addEventListener('click', () => {
 
 popupPlaceForm.addEventListener('submit', handlePlaceFormSubmit);
 
-popupImageBtnClose.addEventListener('click', () => {
-  closePopup(popupImage);
-});
-
 closePopupOverlay(popupProfile);
 closePopupOverlay(popupPlace);
 closePopupOverlay(popupImage);
 
-initialCards.forEach(function(item) {
-  createCard(item.name, item.link);
+initialCards.forEach((item) => {
+  const card = new Card(item, '#template-place');
+  const newCard = card.createCard();
+
+  placesWrapper.prepend(newCard);
+
+})
+
+forms.forEach((form) => {
+  new FormValidator({
+    submitButtonSelector: '.popup__btn-save',
+    inactiveButtonClass: 'popup__btn-save_disabled',
+    inputErrorClass: 'popup__input_type_error',
+  }, form).enableValidation();
 })
