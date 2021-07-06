@@ -14,13 +14,9 @@ class Card {
   }
 
   _setEventListeners() {
-    const popupImage = document.querySelector('.popup_type_image');
-
     this._element.querySelector('.places__like-button').addEventListener('click', this._handleLikeButton);
     this._element.querySelector('.places__remove-button').addEventListener('click', this._handleRemovePlace);
-    popupImage.querySelector('.popup__btn-close').addEventListener('click', () => {
-      closePopup(popupImage);
-    });
+    this._element.querySelector('.places__image').addEventListener('click', this._handleOpenImagePopup);
   }
 
   _handleLikeButton(evt) {
@@ -54,8 +50,6 @@ class Card {
     this._element.querySelector('.places__name').textContent = this._name;
     cardImage.src = this._link;
     cardImage.alt = this._name;
-
-    cardImage.addEventListener('click', this._handleOpenImagePopup);
 
     return this._element;
   }

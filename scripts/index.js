@@ -6,7 +6,7 @@ const placesWrapper = document.querySelector('.places');
 const forms = document.querySelectorAll('.popup__form');
 const editButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_profile');
-const profileCloseButton = popupProfile.querySelector('.popup__btn-close');
+const popupProfileBtnClose = popupProfile.querySelector('.popup__btn-close');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
 const nameInput = popupProfileForm.querySelector('.popup__input[name=name]');
 const jobInput = popupProfileForm.querySelector('.popup__input[name=job]');
@@ -20,6 +20,7 @@ const popupPlaceBtnSave = popupPlace.querySelector('.popup__btn-save');
 const placeNameInput = popupPlaceForm.querySelector('.popup__input[name=placeName]');
 const placeLink = popupPlaceForm.querySelector('.popup__input[name=placeLink]');
 const popupImage = document.querySelector('.popup_type_image');
+const popupImageBtnClose = popupImage.querySelector('.popup__btn-close');
 
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -77,18 +78,22 @@ editButton.addEventListener('click', () => {
   getProfileValues();
 });
 
-profileCloseButton.addEventListener('click', () => {
-  closePopup(popupProfile);
-});
-
 popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
 profileAddButton.addEventListener('click', () => {
   openPopup(popupPlace)
 });
 
+popupProfileBtnClose.addEventListener('click', () => {
+  closePopup(popupProfile);
+});
+
 popupPlaceBtnClose.addEventListener('click', () => {
   closePopup(popupPlace);
+});
+
+popupImageBtnClose.addEventListener('click', () => {
+  closePopup(popupImage);
 });
 
 popupPlaceForm.addEventListener('submit', handlePlaceFormSubmit);
@@ -102,7 +107,6 @@ initialCards.forEach((item) => {
   const newCard = card.createCard();
 
   placesWrapper.prepend(newCard);
-
 })
 
 forms.forEach((form) => {
@@ -110,5 +114,6 @@ forms.forEach((form) => {
     submitButtonSelector: '.popup__btn-save',
     inactiveButtonClass: 'popup__btn-save_disabled',
     inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
   }, form).enableValidation();
 })
