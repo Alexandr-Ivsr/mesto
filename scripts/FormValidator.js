@@ -3,36 +3,23 @@ class FormValidator {
     this._submitButtonSelector = data.submitButtonSelector;
     this._inactiveButtonClass = data.inactiveButtonClass;
     this._inputErrorClass = data.inputErrorClass;
+    this._errorClass = data.errorClass;
     this._formElement = formElement;
-  }
-
-  _setCustomError = (input) => {
-    const validity = input.validity;
-
-    input.setCustomValidity("");
-
-    if (validity.tooShort || validity.tooLong) {
-      input.setCustomValidity(input.validationMessage);
-    }
-
-    if (validity.valueMissing) {
-      input.setCustomValidity(input.validationMessage);
-    }
-
-    if (validity.typeMismatch) {
-      input.setCustomValidity(input.validationMessage);
-    }
-
-    if (!validity.valid) {
-      input.classList.add(this._inputErrorClass);
-    } else {
-      input.classList.remove(this._inputErrorClass);
-    }
   }
 
   _setFieldError = (input) => {
     const span = this._formElement.querySelector(`#${input.id}-error`);
+    const validity = input.validity;
+
     span.textContent = input.validationMessage;
+
+    if (!validity.valid) {
+      input.classList.add(this._inputErrorClass);
+      span.classList.add(this._errorClass);
+    } else {
+      input.classList.remove(this._inputErrorClass);
+      span.classList.remove(this._errorClass);
+    }
   }
 
   _setSubmitButtonState = () => {
@@ -55,7 +42,6 @@ class FormValidator {
   _handleFormInput = (evt) => {
     const input = evt.target;
 
-    this._setCustomError(input);
     this._setFieldError(input);
     this._setSubmitButtonState();
   }

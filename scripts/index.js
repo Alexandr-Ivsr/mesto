@@ -107,7 +107,6 @@ initialCards.forEach((item) => {
   const newCard = card.createCard();
 
   placesWrapper.prepend(newCard);
-
 })
 
 forms.forEach((form) => {
@@ -115,5 +114,6 @@ forms.forEach((form) => {
     submitButtonSelector: '.popup__btn-save',
     inactiveButtonClass: 'popup__btn-save_disabled',
     inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
   }, form).enableValidation();
 })
