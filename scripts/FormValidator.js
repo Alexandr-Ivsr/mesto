@@ -12,19 +12,15 @@ class FormValidator {
     input.setCustomValidity("");
 
     if (validity.tooShort || validity.tooLong) {
-      const currentLength = input.value.length;
-
-      const max = input.getAttribute('maxlength');
-      const min = input.getAttribute('minlength');
-      input.setCustomValidity(`Строка имеет неверную длину. Введено ${currentLength}, а должно быть от ${min} до ${max}`);
+      input.setCustomValidity(input.validationMessage);
     }
 
     if (validity.valueMissing) {
-      input.setCustomValidity("Вы пропустили это поле.");
+      input.setCustomValidity(input.validationMessage);
     }
 
     if (validity.typeMismatch) {
-      input.setCustomValidity("Введите адрес сайта.");
+      input.setCustomValidity(input.validationMessage);
     }
 
     if (!validity.valid) {
