@@ -1,5 +1,5 @@
 class UserInfo {
-  constructor({userNameSelector, userInfoSelector}) {
+  constructor({ userNameSelector, userInfoSelector }) {
     this._userNameSelector = userNameSelector;
     this._userInfoSelector = userInfoSelector;
   }
