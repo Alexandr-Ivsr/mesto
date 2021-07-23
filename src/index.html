@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
 </head>
 <body class="page">
@@ -13,18 +12,18 @@
   </header>
   <main>
     <section class="profile">
-      <img class="profile__avatar" src="./image/avatar.jpg" alt="Аватар профиля">
+      <img class="profile__avatar" src="<%=require('./image/avatar.jpg')%>" alt="Аватар профиля">
       <div class="profile__container">
         <div class="profile__wrapper">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-button">
-            <img class="profile__edit-button-logo" src="./image/edit-button.svg" alt="Редактирование профиля">
+            <img class="profile__edit-button-logo" src="<%=require('./image/edit-button.svg')%>" alt="Редактирование профиля">
           </button>
         </div>
         <p class="profile__info">Исследователь океана</p>
       </div>
       <button class="profile__add-button">
-        <img class="profile__add-button-logo" src="./image/add-button.svg" alt="Добавление">
+        <img class="profile__add-button-logo" src="<%=require('./image/add-button.svg')%>" alt="Добавление">
       </button>
     </section>
 
@@ -46,7 +45,7 @@
         <button class="popup__btn-save" type="submit">Сохранить</button>
       </form>
       <button class="popup__btn-close">
-        <img class="popup__btn-close-icon" src="./image/icon-close.svg" alt="Закрыть">
+        <img class="popup__btn-close-icon" src="<%=require('./image/icon-close.svg')%>" alt="Закрыть">
       </button>
     </div>
   </article>
@@ -62,7 +61,7 @@
         <button class="popup__btn-save popup__btn-save_disabled" type="submit" disabled>Создать</button>
       </form>
       <button class="popup__btn-close">
-        <img class="popup__btn-close-icon" src="./image/icon-close.svg" alt="Закрыть">
+        <img class="popup__btn-close-icon" src="<%=require('./image/icon-close.svg')%>" alt="Закрыть">
       </button>
     </div>
   </article>
@@ -70,7 +69,7 @@
   <article class="popup popup_type_image">
     <div class="popup__image-container">
       <button class="popup__btn-close">
-        <img class="popup__btn-close-icon" src="./image/icon-close.svg" alt="Закрыть">
+        <img class="popup__btn-close-icon" src="<%=require('./image/icon-close.svg')%>" alt="Закрыть">
       </button>
       <img class="popup__place-img" src="#" alt="#">
       <p class="popup__place-name"></p>
@@ -80,7 +79,7 @@
   <template id="template-place">
     <div class="places__item">
       <button class="places__remove-button">
-        <img src="./image/icon-remove.svg" alt="Удалить">
+        <img src="<%=require('./image/icon-remove.svg')%>" alt="Удалить">
       </button>
       <img class="places__image" src="#" alt="#">
       <div class="places__footer">
@@ -89,7 +88,5 @@
       </div>
     </div>
   </template>
-
-  <script src="scripts/index.js" type="module"></script>
 </body>
 </html>

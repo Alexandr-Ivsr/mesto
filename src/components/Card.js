@@ -1,10 +1,9 @@
-import { openPopup, closePopup } from "./index.js";
-
 class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -16,7 +15,7 @@ class Card {
   _setEventListeners() {
     this._element.querySelector('.places__like-button').addEventListener('click', this._handleLikeButton);
     this._element.querySelector('.places__remove-button').addEventListener('click', this._handleRemovePlace);
-    this._element.querySelector('.places__image').addEventListener('click', this._handleOpenImagePopup);
+    this._element.querySelector('.places__image').addEventListener('click', this._handleCardClick);
   }
 
   _handleLikeButton(evt) {
@@ -25,20 +24,6 @@ class Card {
 
   _handleRemovePlace(evt) {
     evt.target.closest('.places__item').remove();
-  }
-
-  _getPlaceValues() {
-    const popupPlaceImage = document.querySelector('.popup_type_image .popup__place-img');
-    const popupPlaceName = document.querySelector('.popup_type_image .popup__place-name');
-
-    popupPlaceImage.setAttribute('src', this._link);
-    popupPlaceImage.setAttribute('alt', this._name);
-    popupPlaceName.textContent = this._name;
-  }
-
-  _handleOpenImagePopup = () => {
-    openPopup(document.querySelector('.popup_type_image'));
-    this._getPlaceValues();
   }
 
   createCard() {
