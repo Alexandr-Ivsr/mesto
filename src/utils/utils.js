@@ -1,5 +1,5 @@
 import { nameInput, jobInput } from './constants.js';
-import { userInfo } from '../pages/index.js';
+import { userInfo } from '../index.js';
 
 export function getProfileValues() {
   const userInfoValues = userInfo.getUserInfo();
