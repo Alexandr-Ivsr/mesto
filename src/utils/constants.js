@@ -9,8 +9,17 @@ export const profileName = document.querySelector('.profile__name');
 export const profileInfo = document.querySelector('.profile__info');
 export const profileAddButton = document.querySelector('.profile__add-button');
 export const popupPlace = document.querySelector('.popup_type_place')
-export const popupPlaceBtnSave = popupPlace.querySelector('.popup__btn-save');
+export const popupPlaceForm = popupPlace.querySelector('.popup__form')
 export const popupImage = document.querySelector('.popup_type_image');
+
+export const formConfig = {
+  submitButtonSelector: '.popup__btn-save',
+  inactiveButtonClass: 'popup__btn-save_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+export const templateSelector = '#template-place';
 
 export const initialCards = [
   {

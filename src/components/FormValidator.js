@@ -46,6 +46,12 @@ class FormValidator {
     this._setSubmitButtonState();
   }
 
+  setSubmitButtonDisabled() {
+    const button = this._formElement.querySelector(this._submitButtonSelector);
+    button.classList.add(this._inactiveButtonClass);
+    button.setAttribute('disabled', 'disabled');
+  }
+
   enableValidation() {
     this._formElement.addEventListener('submit', this._handleFormSubmit);
     this._formElement.addEventListener('input', this._handleFormInput);
