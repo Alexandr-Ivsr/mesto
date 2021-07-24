@@ -14,14 +14,8 @@ class PopupWithForm extends Popup {
     return this._inputValues;
   }
 
-  setEventListeners = () => {
-    this._popupSelector.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
-        this.close();
-      }
-    })
-
-    this._popupSelector.querySelector('.popup__btn-close').addEventListener('click', this.close);
+  setEventListeners() {
+    super.setEventListeners();
 
     this._popupSelector.querySelector('.popup__form').addEventListener('submit', (evt) => {
       evt.preventDefault();
