@@ -30,8 +30,7 @@ class FormValidator {
       button.classList.remove(this._inactiveButtonClass);
       button.removeAttribute('disabled');
     } else {
-      button.classList.add(this._inactiveButtonClass);
-      button.setAttribute('disabled', 'disabled');
+      this.setSubmitButtonDisabled(button);
     }
   }
 
@@ -46,8 +45,7 @@ class FormValidator {
     this._setSubmitButtonState();
   }
 
-  setSubmitButtonDisabled() {
-    const button = this._formElement.querySelector(this._submitButtonSelector);
+  setSubmitButtonDisabled(button) {
     button.classList.add(this._inactiveButtonClass);
     button.setAttribute('disabled', 'disabled');
   }
