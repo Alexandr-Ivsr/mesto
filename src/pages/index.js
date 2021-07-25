@@ -31,6 +31,12 @@ export const userInfo = new UserInfo({
 const popupWithProfileForm = new PopupWithForm(popupProfile, userInfo.setUserInfo);
 const popupWithPlaceForm = new PopupWithForm(popupPlace, createCard);
 
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    return createCardInstance(item, templateSelector);
+}}, placesWrapper);
+
 function createCardInstance(item, selector) {
   const card = new Card(item, selector, () => {
     const popupWithImage = new PopupWithImage(popupImage, item);
@@ -46,15 +52,11 @@ function createCard(inputValues) {
     link: inputValues.placeLink,
   }, templateSelector);
 
-  new Section({}, placesWrapper).addItem(card);
+  cardsList.addItem(card);
   new FormValidator(formConfig, popupPlaceForm).setSubmitButtonDisabled(popupPlaceBtnSave);
 }
 
-new Section({
-  items: initialCards,
-  renderer: (item) => {
-    return createCardInstance(item, templateSelector);
-}}, placesWrapper).renderItems();
+cardsList.renderItems();
 
 forms.forEach((form) => {
   new FormValidator(formConfig, form).enableValidation();
