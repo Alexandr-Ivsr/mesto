@@ -8,8 +8,9 @@ export const jobInput = popupProfileForm.querySelector('.popup__input[name=job]'
 export const profileName = document.querySelector('.profile__name');
 export const profileInfo = document.querySelector('.profile__info');
 export const profileAddButton = document.querySelector('.profile__add-button');
-export const popupPlace = document.querySelector('.popup_type_place')
-export const popupPlaceForm = popupPlace.querySelector('.popup__form')
+export const popupPlace = document.querySelector('.popup_type_place');
+export const popupPlaceForm = popupPlace.querySelector('.popup__form');
+export const popupPlaceBtnSave = popupPlace.querySelector('.popup__btn-save');
 export const popupImage = document.querySelector('.popup_type_image');
 
 export const formConfig = {
