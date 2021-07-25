@@ -19,6 +19,7 @@ import {
   popupImage,
   formConfig,
   templateSelector,
+  popupPlaceBtnSave,
 } from '../utils/constants.js';
 import { getProfileValues } from '../utils/utils.js'
 
@@ -46,7 +47,7 @@ function createCard(inputValues) {
   }, templateSelector);
 
   new Section({}, placesWrapper).addItem(card);
-  new FormValidator(formConfig, popupPlaceForm).setSubmitButtonDisabled();
+  new FormValidator(formConfig, popupPlaceForm).setSubmitButtonDisabled(popupPlaceBtnSave);
 }
 
 new Section({
