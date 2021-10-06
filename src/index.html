@@ -38,10 +38,12 @@
     <div class="popup__container">
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="popup__form" name="popupFormEdit" novalidate>
-        <input required class="popup__input" id="profile-name" minlength="2" maxlength="40" type="text" name="name" placeholder="Имя">
-        <span class="popup__error" id="profile-name-error"></span>
-        <input required class="popup__input" id="profile-job" minlength="2" maxlength="200" type="text" name="job" placeholder="Род деятельности">
-        <span class="popup__error" id="profile-job-error"></span>
+        <div class="popup__inputs-wrapper">
+          <input required class="popup__input" id="profile-name" minlength="2" maxlength="40" type="text" name="name" placeholder="Имя">
+          <span class="popup__error" id="profile-name-error"></span>
+          <input required class="popup__input" id="profile-about" minlength="2" maxlength="200" type="text" name="about" placeholder="Род деятельности">
+          <span class="popup__error" id="profile-about-error"></span>
+        </div>
         <button class="popup__btn-save" type="submit">Сохранить</button>
       </form>
       <button class="popup__btn-close">
@@ -54,10 +56,12 @@
     <div class="popup__container">
       <h3 class="popup__title">Новое место</h3>
       <form class="popup__form" name="popupFormPlace" novalidate>
-        <input required class="popup__input" type="text" id="place-name" minlength="2" maxlength="30" name="placeName" placeholder="Название">
-        <span class="popup__error" id="place-name-error"></span>
-        <input required class="popup__input" type="url" name="placeLink" id="place-link" placeholder="Ссылка на картинку">
-        <span class="popup__error" id="place-link-error"></span>
+        <div class="popup__inputs-wrapper">
+          <input required class="popup__input" type="text" id="place-name" minlength="2" maxlength="30" name="name" placeholder="Название">
+          <span class="popup__error" id="place-name-error"></span>
+          <input required class="popup__input" type="url" name="link" id="place-link" placeholder="Ссылка на картинку">
+          <span class="popup__error" id="place-link-error"></span>
+        </div>
         <button class="popup__btn-save popup__btn-save_disabled" type="submit" disabled>Создать</button>
       </form>
       <button class="popup__btn-close">
@@ -76,6 +80,16 @@
     </div>
   </article>
 
+  <article class="popup popup_type_delete">
+    <div class="popup__container">
+      <h3 class="popup__title">Вы уверены?</h3>
+      <button class="popup__btn-close">
+        <img class="popup__btn-close-icon" src="<%=require('./image/icon-close.svg')%>" alt="Закрыть">
+      </button>
+      <button class="popup__btn-save">Да</button>
+    </div>
+  </article>
+
   <template id="template-place">
     <div class="places__item">
       <button class="places__remove-button">
@@ -84,7 +98,10 @@
       <img class="places__image" src="#" alt="#">
       <div class="places__footer">
         <h2 class="places__name"></h2>
-        <button class="places__like-button"></button>
+        <div class="places__wrapper">
+          <button class="places__like-button"></button>
+          <div class="places__like-number"></div>
+        </div>
       </div>
     </div>
   </template>

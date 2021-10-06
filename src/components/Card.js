@@ -2,6 +2,7 @@ class Card {
   constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -31,10 +32,12 @@ class Card {
     this._setEventListeners();
 
     const cardImage = this._element.querySelector('.places__image');
+    const cardLikeNumber = this._element.querySelector('.places__like-number');
 
     this._element.querySelector('.places__name').textContent = this._name;
     cardImage.src = this._link;
     cardImage.alt = this._name;
+    cardLikeNumber.textContent = this._likes.length;
 
     return this._element;
   }
