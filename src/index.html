@@ -12,7 +12,10 @@
   </header>
   <main>
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./image/avatar.jpg')%>" alt="Аватар профиля">
+      <div class="profile__avatar-wrapper">
+        <img class="profile__avatar" src="<%=require('./image/avatar.jpg')%>" alt="Аватар профиля">
+        <button class="profile__avatar-button"></button>
+      </div>
       <div class="profile__container">
         <div class="profile__wrapper">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -87,6 +90,22 @@
         <img class="popup__btn-close-icon" src="<%=require('./image/icon-close.svg')%>" alt="Закрыть">
       </button>
       <button class="popup__btn-save">Да</button>
+    </div>
+  </article>
+
+  <article class="popup popup_type_avatar">
+    <div class="popup__container">
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form" name="popupFormAvatar" novalidate>
+        <div class="popup__inputs-wrapper">
+          <input required class="popup__input" id="profile-avatar" type="url" name="avatar" placeholder="Ссылка на аватар">
+          <span class="popup__error" id="profile-avatar-error"></span>
+        </div>
+        <button class="popup__btn-save" type="submit">Сохранить</button>
+      </form>
+      <button class="popup__btn-close">
+        <img class="popup__btn-close-icon" src="<%=require('./image/icon-close.svg')%>" alt="Закрыть">
+      </button>
     </div>
   </article>
 

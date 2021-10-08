@@ -136,6 +136,27 @@ class Api {
     })
   }
 
+  updateProfileAvatar({avatar}) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar
+      })
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      else {
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
 };
 
 export default Api;

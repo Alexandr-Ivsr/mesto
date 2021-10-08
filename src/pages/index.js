@@ -20,6 +20,8 @@ import {
   popupPlaceForm,
   popupImage,
   popupDelete,
+  popupAvatar,
+  popupAvatarButton,
   formConfig,
   templateSelector,
   popupPlaceBtnSave,
@@ -48,29 +50,45 @@ api.getProfileData().then((res) => {
   profileAvatar.src = res.avatar;
 
   userId = res._id;
-});
+}).then(() => {
+  api.getCardsData().then((res) => {
+    cardsList = new Section({
+      items: res,
+      renderer: (item) => {
+        return createCardInstance(item, templateSelector);
+    }}, placesWrapper);
 
-api.getCardsData().then((res) => {
-  cardsList = new Section({
-    items: res,
-    renderer: (item) => {
-      return createCardInstance(item, templateSelector);
-  }}, placesWrapper);
-
-  cardsList.renderItems();
+    cardsList.renderItems();
+  });
 });
 
 const popupWithProfileForm = new PopupWithForm(popupProfile, (data) => {
+  const buttonSave = popupProfile.querySelector('.popup__btn-save');
+  buttonSave.textContent = "Сохранение...";
   api.updateProfileData(data)
     .then((data) => {
       userInfo.setUserInfo(data);
+      buttonSave.textContent = "Сохранить";
     });
 });
 
 const popupWithPlaceForm = new PopupWithForm(popupPlace, (data) => {
+  const buttonSave = popupPlace.querySelector('.popup__btn-save');
+  buttonSave.textContent = "Сохранение...";
   api.createCardData(data)
     .then((data) => {
       createCard(data);
+      buttonSave.textContent = "Создать";
+    });
+});
+
+const popupWithAvatarForm = new PopupWithForm(popupAvatar, (data) => {
+  const buttonSave = popupAvatar.querySelector('.popup__btn-save');
+  buttonSave.textContent = "Сохранение...";
+  api.updateProfileAvatar(data)
+    .then((data) => {
+      profileAvatar.src = data.avatar;
+      buttonSave.textContent = "Сохранить";
     });
 });
 
@@ -79,6 +97,33 @@ const popupWithDelete = new PopupWithDelete(popupDelete, (id, deleteCard) => {
     deleteCard();
   });
 });
+
+function handleLikeButton(evt, data, cardElement) {
+  function requestLikeCard() {
+    api.likeCard(data._id)
+      .then((res) => {
+        data.likes = res.likes;
+        cardElement.querySelector('.places__like-number').textContent = data.likes.length;
+        evt.target.classList.add('places__like-button_active');
+      })
+  }
+
+  if (data.likes.length !== 0) {
+    const likes = data.likes.map((item) => item._id);
+    if (likes.includes(userId)) {
+      api.dislikeCard(data._id)
+      .then((res) => {
+        data.likes = res.likes;
+        cardElement.querySelector('.places__like-number').textContent = data.likes.length;
+        evt.target.classList.remove('places__like-button_active');
+      })
+    } else {
+      requestLikeCard();
+    }
+  } else {
+    requestLikeCard();
+  }
+}
 
 function createCardInstance(data, selector) {
   const card = new Card(data, selector, () => {
@@ -94,33 +139,6 @@ function createCardInstance(data, selector) {
   return card.createCard();
 };
 
-function handleLikeButton(evt, data, cardElement) {
-  function requestLikeCard() {
-    api.likeCard(data._id)
-      .then((res) => {
-        data.likes = res.likes;
-        cardElement.querySelector('.places__like-number').textContent = data.likes.length;
-        evt.target.classList.add('places__like-button_active');
-      })
-  }
-
-  if (data.likes.length !== 0) {
-    const likesArr = data.likes.map((item) => item._id);
-    if (likesArr.includes(userId)) {
-      api.dislikeCard(data._id)
-      .then((res) => {
-        data.likes = res.likes;
-        cardElement.querySelector('.places__like-number').textContent = data.likes.length;
-        evt.target.classList.remove('places__like-button_active');
-      })
-    } else {
-      requestLikeCard();
-    }
-  } else {
-    requestLikeCard();
-  }
-}
-
 function createCard(data) {
   const card = createCardInstance(data, templateSelector);
 
@@ -135,6 +153,7 @@ forms.forEach((form) => {
 popupWithProfileForm.setEventListeners();
 popupWithPlaceForm.setEventListeners();
 popupWithDelete.setEventListeners();
+popupWithAvatarForm.setEventListeners();
 
 editButton.addEventListener('click', () => {
   popupWithProfileForm.open();
@@ -143,4 +162,8 @@ editButton.addEventListener('click', () => {
 
 profileAddButton.addEventListener('click', () => {
   popupWithPlaceForm.open();
+})
+
+popupAvatarButton.addEventListener('click', () => {
+  popupWithAvatarForm.open();
 })
