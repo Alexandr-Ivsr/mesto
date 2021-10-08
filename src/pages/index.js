@@ -95,35 +95,29 @@ function createCardInstance(data, selector) {
 };
 
 function handleLikeButton(evt, data, cardElement) {
-  if (data.likes.length !== 0) {
-    data.likes.forEach((item) => {
-      if (item._id === userId) {
-        console.log(data.likes)
-        api.dislikeCard(data._id)
-          .then((res) => {
-            data.likes = res.likes;
-            cardElement.querySelector('.places__like-number').textContent = data.likes.length;
-            evt.target.classList.remove('places__like-button_active');
-            return;
-          })
-      } else {
-        console.log(data.likes)
-        api.likeCard(data._id)
-          .then((res) => {
-            data.likes = res.likes;
-            cardElement.querySelector('.places__like-number').textContent = data.likes.length;
-            evt.target.classList.add('places__like-button_active');
-            return;
-          })
-      }
-    })
-  } else {
+  function requestLikeCard() {
     api.likeCard(data._id)
       .then((res) => {
         data.likes = res.likes;
         cardElement.querySelector('.places__like-number').textContent = data.likes.length;
         evt.target.classList.add('places__like-button_active');
       })
+  }
+
+  if (data.likes.length !== 0) {
+    const likesArr = data.likes.map((item) => item._id);
+    if (likesArr.includes(userId)) {
+      api.dislikeCard(data._id)
+      .then((res) => {
+        data.likes = res.likes;
+        cardElement.querySelector('.places__like-number').textContent = data.likes.length;
+        evt.target.classList.remove('places__like-button_active');
+      })
+    } else {
+      requestLikeCard();
+    }
+  } else {
+    requestLikeCard();
   }
 }
 
