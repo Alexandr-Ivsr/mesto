@@ -1,8 +1,0 @@
-.popup__input_type_error {
-  margin-bottom: 5px;
-  border-color: #FF0000;
-}
-
-.popup__input_type_error:hover, .popup__input_type_error:focus {
-  border-color: #FF0000;
-}
