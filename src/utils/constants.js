@@ -13,6 +13,7 @@ export const popupPlace = document.querySelector('.popup_type_place');
 export const popupPlaceForm = popupPlace.querySelector('.popup__form');
 export const popupPlaceBtnSave = popupPlace.querySelector('.popup__btn-save');
 export const popupImage = document.querySelector('.popup_type_image');
+export const popupDelete = document.querySelector('.popup_type_delete');
 
 export const formConfig = {
   submitButtonSelector: '.popup__btn-save',

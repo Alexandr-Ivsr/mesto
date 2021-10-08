@@ -1,10 +1,14 @@
 class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, handlePopupModalDelete, handleLikeButton, userId) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
+    this._owner = data.owner;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handlePopupModalDelete = handlePopupModalDelete;
+    this._handleLikeButton = handleLikeButton;
+    this._userId = userId;
   }
 
   _getTemplate() {
@@ -15,16 +19,12 @@ class Card {
 
   _setEventListeners() {
     this._element.querySelector('.places__like-button').addEventListener('click', this._handleLikeButton);
-    this._element.querySelector('.places__remove-button').addEventListener('click', this._handleRemovePlace);
+    this._element.querySelector('.places__remove-button').addEventListener('click', this._handlePopupModalDelete);
     this._element.querySelector('.places__image').addEventListener('click', this._handleCardClick);
   }
 
-  _handleLikeButton(evt) {
-    evt.target.classList.toggle('places__like-button_active');
-  }
-
-  _handleRemovePlace(evt) {
-    evt.target.closest('.places__item').remove();
+  deleteCard() {
+    this._element.remove();
   }
 
   createCard() {
@@ -38,6 +38,10 @@ class Card {
     cardImage.src = this._link;
     cardImage.alt = this._name;
     cardLikeNumber.textContent = this._likes.length;
+
+    if (this._userId !== this._owner._id) {
+      this._element.querySelector('.places__remove-button').remove();
+    }
 
     return this._element;
   }

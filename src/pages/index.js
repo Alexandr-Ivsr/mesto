@@ -3,6 +3,7 @@ import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithDelete from '../components/PopupWithDelete';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
 import Api from '../components/Api';
@@ -18,6 +19,7 @@ import {
   popupPlace,
   popupPlaceForm,
   popupImage,
+  popupDelete,
   formConfig,
   templateSelector,
   popupPlaceBtnSave,
@@ -30,6 +32,7 @@ export const userInfo = new UserInfo({
 });
 
 let cardsList;
+let userId;
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-28',
@@ -43,6 +46,8 @@ api.getProfileData().then((res) => {
   profileName.textContent = res.name;
   profileInfo.textContent = res.about;
   profileAvatar.src = res.avatar;
+
+  userId = res._id;
 });
 
 api.getCardsData().then((res) => {
@@ -56,29 +61,52 @@ api.getCardsData().then((res) => {
 });
 
 const popupWithProfileForm = new PopupWithForm(popupProfile, (data) => {
-  userInfo.setUserInfo(data);
-  api.updateProfileData(data);
+  api.updateProfileData(data)
+    .then((data) => {
+      userInfo.setUserInfo(data);
+    });
 });
 
 const popupWithPlaceForm = new PopupWithForm(popupPlace, (data) => {
-  createCard(data);
-  api.createCardData(data);
+  api.createCardData(data)
+    .then((data) => {
+      createCard(data);
+    });
 });
 
-function createCardInstance(item, selector) {
-  const card = new Card(item, selector, () => {
-    const popupWithImage = new PopupWithImage(popupImage, item);
+function createCardInstance(data, selector) {
+  const card = new Card(data, selector, () => {
+    const popupWithImage = new PopupWithImage(popupImage, data);
     popupWithImage.open();
     popupWithImage.setEventListeners();
-  });
+  }, () => {
+    const popupWithDelete = new PopupWithDelete(popupDelete, () => {
+      api.deleteCardData(data._id)
+        .then(() => {
+          card.deleteCard();
+        })
+    });
+    popupWithDelete.open();
+    popupWithDelete.setEventListeners();
+  }, (evt) => {
+    if (evt.target.classList.contains('places__like-button_active')) {
+      api.dislikeCard(data._id)
+        .then((res) => {
+          console.log(res)
+          evt.target.classList.remove('places__like-button_active');
+        })
+    } else {
+      api.likeCard(data._id)
+        .then(() => {
+          evt.target.classList.add('places__like-button_active');
+        })
+    }
+  }, userId);
   return card.createCard();
 }
 
-function createCard(inputValues) {
-  const card = createCardInstance({
-    name: inputValues.name,
-    link: inputValues.link,
-  }, templateSelector);
+function createCard(data) {
+  const card = createCardInstance(data, templateSelector);
 
   cardsList.addItem(card);
   new FormValidator(formConfig, popupPlaceForm).setSubmitButtonDisabled(popupPlaceBtnSave);
