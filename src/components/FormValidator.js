@@ -54,6 +54,17 @@ class FormValidator {
     this._formElement.addEventListener('submit', this._handleFormSubmit);
     this._formElement.addEventListener('input', this._handleFormInput);
   }
+
+  resetValidation() {
+    this._formElement.querySelectorAll('input').forEach((input) => {
+      input.classList.remove(this._inputErrorClass);
+    });
+
+    this._formElement.querySelectorAll('span').forEach((span) => {
+      span.classList.remove(this._errorClass);
+      span.textContent = '';
+    });
+  }
 };
 
 export default FormValidator;

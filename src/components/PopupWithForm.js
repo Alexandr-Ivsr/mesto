@@ -4,6 +4,7 @@ class PopupWithForm extends Popup {
   constructor(popupSelector, callback) {
     super(popupSelector);
     this._callback = callback;
+    this._buttonSave = popupSelector.querySelector('.popup__btn-save');
   }
 
   _getInputValues = () => {
@@ -19,10 +20,19 @@ class PopupWithForm extends Popup {
 
     this._popupSelector.querySelector('.popup__form').addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._callback(this._getInputValues());
-      this.close();
-      evt.target.reset();
+      this._callback(this._getInputValues(), evt);
     });
+  }
+
+  renderLoading(isLoading, textValue) {
+    this._buttonSave.textContent = textValue;
+    if (isLoading) {
+      this._buttonSave.setAttribute('disabled', 'disabled');
+      this._buttonSave.classList.add('popup__btn-save_disabled');
+    } else {
+      this._buttonSave.removeAttribute('disabled');
+      this._buttonSave.classList.remove('popup__btn-save_disabled');
+    }
   }
 }
 

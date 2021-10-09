@@ -43,9 +43,6 @@ class Api {
     .then((res) => {
       return this._getResponseData(res);
     })
-    .catch((error) => {
-      console.log(error);
-    })
   }
 
   createCardData({name, link}) {
@@ -60,9 +57,6 @@ class Api {
     .then((res) => {
       return this._getResponseData(res);
     })
-    .catch((error) => {
-      console.log(error);
-    })
   }
 
   deleteCardData(id) {
@@ -72,9 +66,6 @@ class Api {
     })
     .then((res) => {
       return this._getResponseData(res);
-    })
-    .catch((error) => {
-      console.log(error);
     })
   }
 
@@ -86,9 +77,6 @@ class Api {
     .then((res) => {
       return this._getResponseData(res);
     })
-    .catch((error) => {
-      console.log(error);
-    })
   }
 
   dislikeCard(id) {
@@ -98,9 +86,6 @@ class Api {
     })
     .then((res) => {
       return this._getResponseData(res);
-    })
-    .catch((error) => {
-      console.log(error);
     })
   }
 
@@ -114,9 +99,6 @@ class Api {
     })
     .then((res) => {
       return this._getResponseData(res);
-    })
-    .catch((error) => {
-      console.log(error);
     })
   }
 };

@@ -9,9 +9,9 @@ import Section from '../components/Section.js';
 import Api from '../components/Api';
 import {
   placesWrapper,
-  forms,
   editButton,
   popupProfile,
+  popupProfileForm,
   profileAvatar,
   profileAddButton,
   popupPlace,
@@ -19,10 +19,10 @@ import {
   popupImage,
   popupDelete,
   popupAvatar,
+  popupAvatarForm,
   popupAvatarButton,
   formConfig,
   templateSelector,
-  popupPlaceBtnSave,
 } from '../utils/constants.js';
 import { getProfileValues } from '../utils/utils.js'
 
@@ -34,6 +34,10 @@ export const userInfo = new UserInfo({
 
 let cardsList;
 let userId;
+
+const placeFormValidation = new FormValidator(formConfig, popupPlaceForm);
+const profileFormValidation = new FormValidator(formConfig, popupProfileForm);
+const avatarFormValidation = new FormValidator(formConfig, popupAvatarForm);
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-28',
@@ -61,39 +65,42 @@ Promise.all([api.getProfileData(), api.getCardsData()])
     console.log(error);
   });
 
-const popupWithProfileForm = new PopupWithForm(popupProfile, (data) => {
-  const buttonSave = popupProfile.querySelector('.popup__btn-save');
-  buttonSave.textContent = "Сохранение...";
+const popupWithProfileForm = new PopupWithForm(popupProfile, (data, evt) => {
+  popupWithProfileForm.renderLoading(true, "Сохранение...");
   api.updateProfileData(data)
     .then((data) => {
       userInfo.setUserInfo(data);
-      buttonSave.textContent = "Сохранить";
+      popupWithProfileForm.renderLoading(false, "Сохранить");
+      popupWithProfileForm.close();
+      evt.target.reset();
     })
     .catch((error) => {
       console.log(error);
     });
 });
 
-const popupWithPlaceForm = new PopupWithForm(popupPlace, (data) => {
-  const buttonSave = popupPlace.querySelector('.popup__btn-save');
-  buttonSave.textContent = "Сохранение...";
+const popupWithPlaceForm = new PopupWithForm(popupPlace, (data, evt) => {
+  popupWithPlaceForm.renderLoading(true, "Сохранение...");
   api.createCardData(data)
     .then((data) => {
       createCard(data);
-      buttonSave.textContent = "Создать";
+      popupWithPlaceForm.renderLoading(false, "Создать");
+      popupWithPlaceForm.close();
+      evt.target.reset();
     })
     .catch((error) => {
       console.log(error);
     });
 });
 
-const popupWithAvatarForm = new PopupWithForm(popupAvatar, (data) => {
-  const buttonSave = popupAvatar.querySelector('.popup__btn-save');
-  buttonSave.textContent = "Сохранение...";
+const popupWithAvatarForm = new PopupWithForm(popupAvatar, (data, evt) => {
+  popupWithAvatarForm.renderLoading(true, "Сохранение...");
   api.updateProfileAvatar(data)
     .then((data) => {
       profileAvatar.src = data.avatar;
-      buttonSave.textContent = "Сохранить";
+      popupWithAvatarForm.renderLoading(false, "Сохранить");
+      popupWithAvatarForm.close();
+      evt.target.reset();
     })
     .catch((error) => {
       console.log(error);
@@ -109,6 +116,8 @@ const popupWithDelete = new PopupWithDelete(popupDelete, (id, deleteCard) => {
       console.log(error);
     });
 });
+
+const popupWithImage = new PopupWithImage(popupImage);
 
 function handleLikeButton(evt, data, cardElement) {
   function requestLikeCard() {
@@ -145,9 +154,7 @@ function handleLikeButton(evt, data, cardElement) {
 
 function createCardInstance(data, selector) {
   const card = new Card(data, selector, () => {
-    const popupWithImage = new PopupWithImage(popupImage, data);
-    popupWithImage.open();
-    popupWithImage.setEventListeners();
+    popupWithImage.open(data);
   }, (cardElement) => {
     popupWithDelete.open(data._id, () => cardElement.remove());
   }, (evt, cardElement) => {
@@ -161,27 +168,31 @@ function createCard(data) {
   const card = createCardInstance(data, templateSelector);
 
   cardsList.addItem(card);
-  new FormValidator(formConfig, popupPlaceForm).setSubmitButtonDisabled(popupPlaceBtnSave);
+  placeFormValidation.setSubmitButtonDisabled();
 }
 
-forms.forEach((form) => {
-  new FormValidator(formConfig, form).enableValidation();
-})
+placeFormValidation.enableValidation();
+profileFormValidation.enableValidation();
+avatarFormValidation.enableValidation();
 
 popupWithProfileForm.setEventListeners();
 popupWithPlaceForm.setEventListeners();
 popupWithDelete.setEventListeners();
 popupWithAvatarForm.setEventListeners();
+popupWithImage.setEventListeners();
 
 editButton.addEventListener('click', () => {
+  profileFormValidation.resetValidation();
   popupWithProfileForm.open();
   getProfileValues();
 });
 
 profileAddButton.addEventListener('click', () => {
+  placeFormValidation.resetValidation();
   popupWithPlaceForm.open();
 })
 
 popupAvatarButton.addEventListener('click', () => {
+  avatarFormValidation.resetValidation();
   popupWithAvatarForm.open();
 })
