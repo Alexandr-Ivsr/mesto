@@ -5,6 +5,7 @@ class FormValidator {
     this._inputErrorClass = data.inputErrorClass;
     this._errorClass = data.errorClass;
     this._formElement = formElement;
+    this._buttonSubmit = formElement.querySelector(this._submitButtonSelector);
   }
 
   _setFieldError = (input) => {
@@ -23,14 +24,13 @@ class FormValidator {
   }
 
   _setSubmitButtonState = () => {
-    const button = this._formElement.querySelector(this._submitButtonSelector);
     const isValid = this._formElement.checkValidity();
 
     if (isValid) {
-      button.classList.remove(this._inactiveButtonClass);
-      button.removeAttribute('disabled');
+      this._buttonSubmit.classList.remove(this._inactiveButtonClass);
+      this._buttonSubmit.removeAttribute('disabled');
     } else {
-      this.setSubmitButtonDisabled(button);
+      this.setSubmitButtonDisabled();
     }
   }
 
@@ -45,9 +45,9 @@ class FormValidator {
     this._setSubmitButtonState();
   }
 
-  setSubmitButtonDisabled(button) {
-    button.classList.add(this._inactiveButtonClass);
-    button.setAttribute('disabled', 'disabled');
+  setSubmitButtonDisabled() {
+    this._buttonSubmit.classList.add(this._inactiveButtonClass);
+    this._buttonSubmit.setAttribute('disabled', 'disabled');
   }
 
   enableValidation() {

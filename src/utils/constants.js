@@ -5,8 +5,6 @@ export const popupProfile = document.querySelector('.popup_type_profile');
 export const popupProfileForm = popupProfile.querySelector('.popup__form');
 export const nameInput = popupProfileForm.querySelector('.popup__input[name=name]');
 export const aboutInput = popupProfileForm.querySelector('.popup__input[name=about]');
-export const profileName = document.querySelector('.profile__name');
-export const profileInfo = document.querySelector('.profile__info');
 export const profileAvatar = document.querySelector('.profile__avatar');
 export const profileAddButton = document.querySelector('.profile__add-button');
 export const popupPlace = document.querySelector('.popup_type_place');

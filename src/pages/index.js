@@ -12,8 +12,6 @@ import {
   forms,
   editButton,
   popupProfile,
-  profileName,
-  profileInfo,
   profileAvatar,
   profileAddButton,
   popupPlace,
@@ -29,8 +27,9 @@ import {
 import { getProfileValues } from '../utils/utils.js'
 
 export const userInfo = new UserInfo({
-  userNameSelector: profileName,
-  userInfoSelector: profileInfo,
+  userNameSelector: '.profile__name',
+  userInfoSelector: '.profile__info',
+  userAvatarSelector: '.profile__avatar',
 });
 
 let cardsList;
@@ -44,23 +43,23 @@ const api = new Api({
   }
 });
 
-api.getProfileData().then((res) => {
-  profileName.textContent = res.name;
-  profileInfo.textContent = res.about;
-  profileAvatar.src = res.avatar;
+Promise.all([api.getProfileData(), api.getCardsData()])
+  .then((responses) => {
+    userInfo.setUserInfo(responses[0]);
 
-  userId = res._id;
-}).then(() => {
-  api.getCardsData().then((res) => {
+    userId = responses[0]._id;
+
     cardsList = new Section({
-      items: res,
+      items: responses[1],
       renderer: (item) => {
         return createCardInstance(item, templateSelector);
     }}, placesWrapper);
 
     cardsList.renderItems();
+  })
+  .catch((error) => {
+    console.log(error);
   });
-});
 
 const popupWithProfileForm = new PopupWithForm(popupProfile, (data) => {
   const buttonSave = popupProfile.querySelector('.popup__btn-save');
@@ -69,6 +68,9 @@ const popupWithProfileForm = new PopupWithForm(popupProfile, (data) => {
     .then((data) => {
       userInfo.setUserInfo(data);
       buttonSave.textContent = "Сохранить";
+    })
+    .catch((error) => {
+      console.log(error);
     });
 });
 
@@ -79,6 +81,9 @@ const popupWithPlaceForm = new PopupWithForm(popupPlace, (data) => {
     .then((data) => {
       createCard(data);
       buttonSave.textContent = "Создать";
+    })
+    .catch((error) => {
+      console.log(error);
     });
 });
 
@@ -89,13 +94,20 @@ const popupWithAvatarForm = new PopupWithForm(popupAvatar, (data) => {
     .then((data) => {
       profileAvatar.src = data.avatar;
       buttonSave.textContent = "Сохранить";
+    })
+    .catch((error) => {
+      console.log(error);
     });
 });
 
 const popupWithDelete = new PopupWithDelete(popupDelete, (id, deleteCard) => {
-  api.deleteCardData(id).then(() => {
-    deleteCard();
-  });
+  api.deleteCardData(id)
+    .then(() => {
+      deleteCard();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 function handleLikeButton(evt, data, cardElement) {
@@ -106,17 +118,23 @@ function handleLikeButton(evt, data, cardElement) {
         cardElement.querySelector('.places__like-number').textContent = data.likes.length;
         evt.target.classList.add('places__like-button_active');
       })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   if (data.likes.length !== 0) {
     const likes = data.likes.map((item) => item._id);
     if (likes.includes(userId)) {
       api.dislikeCard(data._id)
-      .then((res) => {
-        data.likes = res.likes;
-        cardElement.querySelector('.places__like-number').textContent = data.likes.length;
-        evt.target.classList.remove('places__like-button_active');
-      })
+        .then((res) => {
+          data.likes = res.likes;
+          cardElement.querySelector('.places__like-number').textContent = data.likes.length;
+          evt.target.classList.remove('places__like-button_active');
+        })
+        .catch((error) => {
+          console.log(error);
+        })
     } else {
       requestLikeCard();
     }
